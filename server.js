@@ -126,12 +126,15 @@ app.post('/login', async (req, res) => {
         }
 
         if (user.password !== password) {
-            res.status(401).json({ message: 'Invalid credentials' });
+            res.status(401).json({ message: 'Invalid credentials', });
             return;
         }
 
-        if (user['account-status'] === 'unverified') {
-            res.status(401).json({ message: 'Please verify your account first' });
+        if (user['userStatus'] === 'unverified') {
+            res.status(200).json({ message: 'Please verify your account first', userId:user._id, 
+            userUsername:user.username,
+            userEmail:user.email,
+            userStatus:user.userStatus });
             return;
         }
 
