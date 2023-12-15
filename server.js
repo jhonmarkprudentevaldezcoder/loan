@@ -137,7 +137,8 @@ app.post('/login', async (req, res) => {
 
         // If everything is correct, log in the user
         req.session.username = user.username; // Store the username in the session
-        res.status(200).json({ message: 'Login successful' });
+
+        res.status(200).json({ message: 'Login successful' , userId:user._id});
 
     } catch (error) {
         console.error('Error during login:', error);
