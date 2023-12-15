@@ -1,0 +1,151 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins);
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Poppins', sans-serif;
+}
+
+body {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   min-height: 100vh;
+   background-color: #353b48;
+   background-size: cover;
+   background-position: center;
+
+
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+}
+
+
+.logo {
+    font-size: 2em;
+    color: rgb(255, 255, 255);
+    user-select: none; 
+    
+}
+
+.navigation a {
+    position: relative;
+    font-size: 1.1em;
+    color: aliceblue;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 40px;
+    
+
+}
+
+.navigation a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: #fff;
+    border-radius: 5px;
+    transform: scaleX(0);
+    transition: transform .5s;
+
+}
+
+.navigation a:hover::after {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+.forgot-form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    backdrop-filter: blur(20px);
+    background: transparent;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, .5);
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    top: 150px; /* Adjust this value to position the card from the top */
+    left: 420px;
+    position: absolute;
+    width: 600px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, .5);
+    height: 270px;
+    
+  
+  }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+    
+    fieldset {
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 20px;
+      height: 160px;
+    }
+    
+  
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #ffffff;
+    }
+
+    input[type="text"],
+    input[type="text"],
+    input[type="password"],
+    input[type="password"],
+    
+    
+textarea {
+width: 100%;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+}
+
+button {
+background-color: #2eb466;
+color: #fff;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.reset-form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    backdrop-filter: blur(20px);
+    background: transparent;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, .5);
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    top: 150px; /* Adjust this value to position the card from the top */
+    left: 420px;
+    position: absolute;
+    width: 600px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, .5);
+    height: 360px;
+    
+  }

@@ -1,0 +1,419 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins);
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #485460;
+        background-size: cover;
+        background-position: center;
+     
+     
+     }
+
+     .top-text {
+        text-align: center;
+        padding: 20px 0;
+        position: absolute; /* Set the position to absolute */
+        top: 80px; /* Adjust the top value to move the text vertically */
+        left: 520px; /* Adjust the left value to move the text horizontally */
+        font-size: 25px;
+        color: #fff;
+        
+      }
+
+      .top-text h2 {
+        opacity: 0; /* Set initial opacity to 0 for fade-in effect */
+        animation: fadeInText 1s ease 1s forwards; /* Add fade-in animation */
+      }
+      
+      @keyframes fadeInText {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+
+     
+
+     header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px 100px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 99;
+        background: transparent;
+        backdrop-filter: blur(20px);
+    
+    }
+
+    .logo {
+        font-size: 2em;
+        color: rgb(255, 255, 255);
+        user-select: none; 
+    }
+
+    .navigation a {
+        position: relative;
+        font-size: 1.1em;
+        color: aliceblue;
+        text-decoration: none;
+        font-weight: 500;
+        margin-left: 40px;
+    
+    }
+
+    .navigation a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 100%;
+        height: 3px;
+        background: #fff;
+        border-radius: 5px;
+        transform: scaleX(0);
+        transition: transform .5s;
+    
+    }
+
+    .navigation a:hover::after {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+
+    
+
+    .card {
+        box-shadow: 0 0 50px rgba(0, 0, 0, .5);
+        max-width: 230px;
+        margin: auto;
+        text-align: center;
+        border-radius: 20px;
+        border: 2px solid rgba(255, 255, 255, .5);
+        backdrop-filter: blur(20px);
+        position: absolute;
+        top: 200px; /* Adjust this value to position the card from the top */
+        left: 60px;
+        animation: moveUpDown 2s ease infinite alternate; }
+
+      @keyframes moveUpDown {
+        0% {
+          transform: translateY(0); /* Initial position */
+        }
+        100% {
+          transform: translateY(15px); /* Final position */
+        }
+      }
+      .card img {
+        border-radius: 20PX; /* Change this value to adjust the image border radius */
+        width: 100%;
+        height: auto;
+      }
+
+      
+      
+      .title {
+        color: grey;
+        font-size: 18px;
+      }
+      
+      button {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+        border-radius: 20px;
+      }
+      
+      a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+      }
+      
+      button:hover, a:hover {
+        opacity: 0.7;
+      }
+
+      .card2 {
+        box-shadow: 0 0 50px rgba(0, 0, 0, .5);
+        max-width: 230px;
+        margin: auto;
+        text-align: center;
+        border-radius: 20px;
+        border: 2px solid rgba(255, 255, 255, .5);
+        backdrop-filter: blur(20px);
+        position: absolute;
+        top: 200px; /* Adjust this value to position the card from the top */
+        left: 300px;
+        animation: moveUpDownOpposite 2s ease infinite alternate; }
+
+      @keyframes moveUpDownOpposite {
+        0% {
+          transform: translateY(0); /* Initial position */
+        }
+        100% {
+          transform: translateY(-15px); /* Final position */
+        }
+      }
+
+
+      .card2 img {
+        border-radius: 20PX; /* Change this value to adjust the image border radius */
+        width: 100%;
+        height: auto;
+      }
+      
+      .title {
+        color: grey;
+        font-size: 18px;
+      }
+      
+      .btn1 {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+        border-radius: 20px;
+      }
+      
+      a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+      }
+      
+      .btn1:hover, a:hover {
+        opacity: 0.7;
+      }
+
+      .card3 {
+        box-shadow: 0 0 50px rgba(0, 0, 0, .5);
+        max-width: 230px;
+        margin: auto;
+        text-align: center;
+        border-radius: 20px;
+        border: 2px solid rgba(255, 255, 255, .5);
+        backdrop-filter: blur(20px);
+        position: absolute;
+        top: 200px; /* Adjust this value to position the card from the top */
+        left: 540px;
+        animation: moveUpDown 2s ease infinite alternate; }
+
+        @keyframes moveUpDown {
+          0% {
+            transform: translateY(0); /* Initial position */
+          }
+          100% {
+            transform: translateY(15px); /* Final position */
+          }
+        }
+        
+      
+      
+
+      .card3 img {
+        border-radius: 20PX; /* Change this value to adjust the image border radius */
+        width: 100%;
+        height: auto;
+      }
+      
+      .title {
+        color: grey;
+        font-size: 18px;
+      }
+      
+      .btn2 {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+        border-radius: 20px;
+      }
+      
+      a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+      }
+      
+      .btn2:hover, a:hover {
+        opacity: 0.7;
+      }
+
+
+      .card4 {
+        box-shadow: 0 0 50px rgba(0, 0, 0, .5);
+        max-width: 230px;
+        margin: auto;
+        text-align: center;
+        border-radius: 20px;
+        border: 2px solid rgba(255, 255, 255, .5);
+        backdrop-filter: blur(20px);
+        position: absolute;
+        top: 200px; /* Adjust this value to position the card from the top */
+        left: 780px;
+        animation: moveUpDownOpposite 2s ease infinite alternate; }
+
+      @keyframes moveUpDownOpposite {
+        0% {
+          transform: translateY(0); /* Initial position */
+        }
+        100% {
+          transform: translateY(-15px); /* Final position */
+        }
+      }
+      
+
+      .card4 img {
+        border-radius: 20PX; /* Change this value to adjust the image border radius */
+        width: 100%;
+        height: auto;
+      }
+      
+      .title {
+        color: grey;
+        font-size: 18px;
+      }
+      
+      .btn3 {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+        border-radius: 20px;
+      }
+      
+      a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+      }
+      
+      .btn3:hover, a:hover {
+        opacity: 0.7;
+      }
+
+
+      .card5 {
+        box-shadow: 0 0 50px rgba(0, 0, 0, .5);
+        max-width: 230px;
+        margin: auto;
+        text-align: center;
+        border-radius: 20px;
+        border: 2px solid rgba(255, 255, 255, .5);
+        backdrop-filter: blur(20px);
+        position: absolute;
+        top: 200px; /* Adjust this value to position the card from the top */
+        left: 1020px;
+        animation: moveUpDown 2s ease infinite alternate; }
+
+      @keyframes moveUpDown {
+        0% {
+          transform: translateY(0); /* Initial position */
+        }
+        100% {
+          transform: translateY(15px); /* Final position */
+        }
+      }
+        
+      
+
+      .card5 img {
+        border-radius: 20PX; /* Change this value to adjust the image border radius */
+        width: 100%;
+        height: auto;
+      }
+      
+      .title {
+        color: grey;
+        font-size: 18px;
+      }
+      
+      .btn4 {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+        border-radius: 20px;
+      }
+      
+      a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+      }
+      
+      .btn4:hover, a:hover {
+        opacity: 0.7;
+      }
+
+      .jaycee {
+        color: #fff;
+      }
+
+      .aira {
+        color: #fff;
+      }
+
+      .mancio {
+        color: #fff;
+      }
+
+    .lizel {
+        color: #fff;
+    }
+
+    .raf {
+        color: #fff;
+    }

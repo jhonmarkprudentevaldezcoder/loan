@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DASHBOARD</title>
+    <link rel="stylesheet" href="account-style.css">
+    <style>
+        </style>
+</head>
+<body>
+    
+<header>
+    <h2 class="logo"><span id="welcomeUsername"><%= session.username %></span> </h2>
+    <nav class="navigation">
+        <a href="contact.html">DashBoard</a>
+        <button id="logoutButton" class="btnLogin-popup" onclick="confirmLogout()">Logout</button>
+    </nav>
+</header>
+
+<div class="top-text">
+    <h2></h2>
+</div>
+
+
+<form id="changePasswordForm" action="/changePassword" method="POST">
+    <div class="changepassword-form-container">
+      <h1>Change Password</h1>
+  
+      <div class="form-section">
+        <fieldset>
+          <label for="old-password">Old Password</label>
+          <input type="password" id="oldPassword" name="old-password" placeholder="Old password"/>
+          
+          <br>
+          <label for="new-password">New Password</label>
+          <input type="password" id="newPassword" name="new-password" placeholder="New password"/>
+          
+          <br>
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirmPassword" name="confirm-password" placeholder="Confirm password"/>
+          <br>
+          <br>
+          <button type="submit">Change Password</button>
+        </fieldset>
+      </div>
+    </div>
+  </form>
+  
+  <div class="info-form-container">
+    <h1>Account info</h1>
+    <fieldset>
+        <label for="userID">UserID:</label>
+        <span id="userID"></span>
+        <br>
+        <label for="username">Username:</label>
+        <span id="username"></span>
+        <br>
+        <label for="email">Email:</label>
+        <span id="email"></span>
+        <br>
+        <label for="password">Password:</label>
+        <span id="password"></span>
+        <br>
+        <label for="accountStatus">Account Status:</label>
+        <span id="accountStatus"></span>
+    </fieldset>
+</div>
+
+<script>
+    // Function to fetch user data and update the HTML
+function fetchAndDisplayUserData() {
+    fetch('/getUsername')
+        .then(response => response.json())
+        .then(data => {
+            // Update the username placeholder
+            document.getElementById('username').textContent = data.username;
+
+            // If the user is not a guest, fetch additional data
+            if (data.username !== 'Guest') {
+                // Fetch additional user data based on the username
+                fetch('/getUserData?username=' + data.username)
+                    .then(response => response.json())
+                    .then(userData => {
+                        // Update other placeholders with user data
+                        document.getElementById('userID').textContent = userData.userID;
+                        document.getElementById('email').textContent = userData.email;
+                        document.getElementById('password').textContent = '********'; // For security, avoid displaying the actual password
+                        document.getElementById('accountStatus').textContent = userData.accountStatus;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching user data:', error);
+                    });
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching username:', error);
+        });
+}
+
+// Call the function to fetch and display user data when the page loads
+fetchAndDisplayUserData();
+
+</script>
+
+
+<!-- JS FOR LOGO USERNAME IN ACCOUNT -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const welcomeUsername = document.getElementById('welcomeUsername');
+        const storedUsername = '<%= session.username %>'; // Use the server-side variable
+
+        if (storedUsername) {
+            welcomeUsername.textContent = storedUsername;
+        } else {
+            welcomeUsername.textContent = 'Guest';
+        }
+    });
+</script>
+
+<!-- JS FOR LOGO USERNAME IN DASHBOARD -->
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('/account');
+        const data = await response.json();
+        
+        const welcomeUsername = document.getElementById('welcomeUsername');
+        welcomeUsername.textContent = data.username;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
+</script>
+  <!-- JS FOR LOGO USERNAME IN ACCOUNT -->
+
+
+  <script>
+    const changePasswordForm = document.getElementById('changePasswordForm');
+  
+    changePasswordForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+  
+      const oldPassword = document.getElementById('oldPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+  
+      const response = await fetch('/changePassword', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'old-password': oldPassword,
+          'new-password': newPassword,
+          'confirm-password': confirmPassword
+        })
+      });
+  
+      const data = await response.json();
+      alert(data.message); // Display the response message to the user
+    });
+  </script>
+
+<script>
+    function confirmLogout() {
+        const confirmation = confirm('Are you sure you want to logout?');
+        if (confirmation) {
+            // Perform logout action here, e.g. redirect to logout page or clear session data
+            window.location.href = '/index.html'; // You can change this to your logout endpoint
+        }
+    }
+  </script>
+</body>
+</html>

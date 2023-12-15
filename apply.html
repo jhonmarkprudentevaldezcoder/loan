@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Loan Application Form</title>
+    <link rel="stylesheet" href="apply-style.css">
+   
+</head>
+<body>
+
+  <header>
+    <h2 class="logo"><span id="welcomeUsername"><%= session.username %></span> </h2>
+    <nav class="navigation">
+        <a href="contact.html">Dashboard</a>
+        <button id="logoutButton" class="btnLogin-popup" onclick="confirmLogout()">Logout</button>
+    </nav>
+</header>
+
+
+<form id="loanApplicationForm">
+<div class="loan-form-container">
+  <form action="/submitLoanApplication" method="POST" class="loan-form">
+    <h1>Loan Application</h1>
+
+    <div class="form-section">
+      <fieldset>
+        <legend>Basic Information</legend>
+        
+  
+        <label for="first-name">First Name</label>
+        <input type="text" name="first-name" required placeholder="e.g. JAYCEEMATT"/>
+        <label for="last-name">Last Name/MI</label>
+        <input type="text" name="last-name" required placeholder="e.g. GARCIA .S"/>
+        <label for="email">Email</label>
+        <input type="text" name="email"  required placeholder="e.g. JCEE@gmail.com"/>
+        <br/>
+        <label for="telephone">Contact Number (Philippines)</label>
+        <input type="tel" name="telephone" pattern="(\+63|0)[0-9]{10}" required placeholder="e.g. +639123456789 or 09123456789" />
+        <br/>
+        <label for="address">Home Address</label>
+        <input type="text" name="address"required placeholder="e.g. BLK 1 LOT 54 PH 1F SUB-URBAN"/>
+        <label for="birthday">Birthday</label>
+        <input type="date" name="birthday" required />
+      </fieldset>
+    </div>
+
+    <div class="form-section">
+        <fieldset>
+          <legend>IDS</legend>
+          <label for="ID-type">Type of ID</label>
+          <input name="ID" list="type-of-ID" required/>
+          <datalist id="type-of-ID"> 
+           
+            <option value="Passport">
+            <option value="National ID">
+            <option value="Driver license">
+            
+          </datalist>
+          <br/>
+          <label for="ID-number">ID Number</label>
+          <input type="text" name="ID-number" required placeholder="e.g. 2196-5456-6456-2312"/>
+        </fieldset>
+      </div>
+
+    <div class="form-section">
+      <fieldset>
+        <legend>Work Information</legend>
+        <label for="occupation">Current Work</label>
+        <input type="text" name="occupation" required placeholder="e.g. CALL CENTER"/>
+        <label for="company-location">Work Address</label>
+        <input type="text" name="company-location" required placeholder="e.g. METRO MANILA BUILDING" />
+        <label for="monthly-income">Montly Income</label>
+        <input type="text" name="monthly-income" required placeholder="e.g. 32,000"/>
+      </fieldset>
+    </div>
+
+    <div class="form-section">
+      <fieldset>
+        <legend>Loan Type & Amount</legend>
+        <label>Loan Type</label>
+        <input type="radio" name="loan-type" value="Personal Loan" required>Personal Loan
+        <input type="radio" name="loan-type" value="Business Loan">Business Loan
+    
+        <label for="loan-amount">Loan Amount</label>
+        <input type="text" id="loan-amount" name="loan-amount" readonly />
+    
+        <label for="loan-interest">Loan Interest</label>
+        <input type="text" id="loan-interest" name="loan-interest" readonly />
+    
+        <label>Terms in (months)</label>
+        <input type="radio" name="length-of-time" value="3" required>3
+        <input type="radio" name="length-of-time" value="6">6
+        <input type="radio" name="length-of-time" value="9">9
+        <input type="radio" name="length-of-time" value="12">12
+    
+        <label for="total-payment">Total Payment</label>
+        <input type="text" id="total-payment" name="total-payment" readonly />
+    
+        <label for="payment-permonth">Payment per month</label>
+        <input type="text" id="payment-permonth" name="payment-permonth" readonly />
+      </fieldset>
+    </div>
+      
+    <div class="form-section">
+      <fieldset>
+        <legend>Marital Status</legend>
+        <label>
+          <input type="radio" name="marital-status" value="single" required> Single
+        </label>
+        <label>
+          <input type="radio" name="marital-status" value="married"> Married
+        </label>
+        <label>
+          <input type="radio" name="marital-status" value="divorced"> Divorced
+        </label>
+        <label>
+          <input type="radio" name="marital-status" value="widowed"> Widowed
+        </label>
+      </fieldset>
+    </div>
+
+      <div class="form-section">
+        <fieldset>
+          <legend>Attachments</legend>
+          <label for="photo" required>Upload Payslip:</label>
+          <input type="file" id="photo" name="photo" accept="image/*">
+          
+      </div>
+
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+
+<script>
+  const loanTypeInputs = document.querySelectorAll('input[name="loan-type"]');
+  const loanAmountInput = document.getElementById('loan-amount');
+  const loanInterestInput = document.getElementById('loan-interest');
+  const totalPaymentInput = document.getElementById('total-payment');
+  const paymentPerMonthInput = document.getElementById('payment-permonth');
+
+  loanTypeInputs.forEach(input => {
+    input.addEventListener('input', () => {
+      const selectedLoanType = document.querySelector('input[name="loan-type"]:checked').value;
+
+      if (selectedLoanType === 'Personal Loan') {
+        loanAmountInput.value = '10000';
+        loanInterestInput.value = '3%';
+      } else if (selectedLoanType === 'Business Loan') {
+        loanAmountInput.value = '30000';
+        loanInterestInput.value = '5%';
+      } else {
+        loanAmountInput.value = '';
+        loanInterestInput.value = '';
+      }
+
+      updatePaymentDetails();
+    });
+  });
+
+  const updatePaymentDetails = () => {
+    const loanAmount = parseFloat(loanAmountInput.value);
+    const loanInterest = parseFloat(loanInterestInput.value) / 100;
+    const selectedTerm = parseInt(document.querySelector('input[name="length-of-time"]:checked').value);
+
+    const totalPayment = loanAmount + (loanAmount * loanInterest * selectedTerm);
+    const paymentPerMonth = totalPayment / selectedTerm;
+
+    totalPaymentInput.value = totalPayment.toFixed(2);
+    paymentPerMonthInput.value = paymentPerMonth.toFixed(2);
+  };
+  
+  document.querySelectorAll('input[name="length-of-time"]').forEach(input => {
+    input.addEventListener('change', updatePaymentDetails);
+  });
+
+</script>
+
+<!-- START OF JS FOR APPLICATION -->
+<script>
+  // Client-side code
+  document.addEventListener('DOMContentLoaded', () => { 
+    const loanApplicationForm = document.getElementById('loanApplicationForm');
+
+    loanApplicationForm.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Prevent default form submission
+
+        // Collect form data using FormData
+        const formData = new FormData(loanApplicationForm);
+
+        // Get the stored username from session storage
+        const storedUsername = sessionStorage.getItem('username');
+
+        // Add the username to the form data
+        formData.append('username', storedUsername);
+
+        try {
+            const response = await fetch('/submitLoanApplication', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            if (data.message === 'Loan application submitted successfully') {
+                alert('Loan application submitted successfully');
+               
+                // Reset the form after successful submission
+                loanApplicationForm.reset();
+            } else {
+                alert('Loan application submission failed');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+});
+
+</script>
+<!-- END OF APPLICATION  JS -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+      const welcomeUsername = document.getElementById('welcomeUsername');
+      const storedUsername = '<%= session.username %>'; // Use the server-side variable
+
+      if (storedUsername) {
+          welcomeUsername.textContent = storedUsername;
+      } else {
+          welcomeUsername.textContent = 'Guest';
+      }
+  });
+</script>
+
+
+
+
+
+ <script>
+  function confirmLogout() {
+      const confirmation = confirm('Are you sure you want to logout?');
+      if (confirmation) {
+          // Perform logout action here, e.g. redirect to logout page or clear session data
+          window.location.href = '/index.html'; // You can change this to your logout endpoint
+      }
+  }
+</script>
+
+</body>
+</html>

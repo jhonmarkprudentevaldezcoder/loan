@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>LOAN MANAGE</title>
+    <link rel="stylesheet" href="forgotpass-style.css"
+</head>
+
+<body>
+       <header>
+        <h2 class="logo">FORGOT ACCOUNT</h2>
+          <nav class="navigation">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+          </nav>
+        </div>
+       </header>
+
+
+       <form id="forgotpassword" action="/forgot" method="POST">
+        <div class="forgot-form-container">
+          <h1>Forgot Account?</h1>
+      
+          <div class="form-section">
+            <fieldset>
+              <label for="emaiL">Email</label>
+              <input type="text" id="eMail" name="emaiL" placeholder="Email (used in registration)"/>
+              <br>
+              <br>
+              <button type="submit">submit</button>
+              <div id="statusMessage"></div>
+            </fieldset>
+          </div>
+        </div>
+    </form>
+
+    <form id="verifyotp" style="display: none;">
+        <div class="forgot-form-container">
+            <h1>Verify OTP</h1>
+        
+            <div class="form-section">
+                <fieldset>
+                    <label for="otp">OTP</label>
+                    <input type="text" id="otpInput" placeholder="Enter OTP from email"/>
+                    <br>
+                    <br>
+                    <button type="button" id="verifyOTPButton">Verify OTP</button>
+                    <div id="otpStatusMessage"></div>
+                </fieldset>
+            </div>
+        </div>
+    </form>
+
+    <form id="resetpassword" style="display: none;">
+        <div class="reset-form-container">
+            <h1>Reset Password</h1>
+        
+            <div class="form-section">
+                <fieldset>
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" name="newPassword" placeholder="Enter new password"/>
+                    <br>
+                    <br>
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password"/>
+                    <br>
+                    <br>
+                    <button type="button"  id="resetPasswordButton">Reset Password</button>
+                    <div id="resetStatusMessage"></div>
+                </fieldset>
+            </div>
+        </div>
+    </form>
+
+
+<script>
+   document.getElementById('forgotpassword').addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevent default form submission
+
+    const email = document.getElementById('eMail').value;
+
+    const forgotData = {
+        email: email
+    };
+
+    try {
+        const response = await fetch('/forgot', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(forgotData)
+        });
+
+        const result = await response.text();
+
+        if (result === 'Check your email for OTP instructions.') {
+            // Hide the email input form
+            document.getElementById('forgotpassword').style.display = 'none';
+            // Display the OTP input form
+            document.getElementById('verifyotp').style.display = 'block';
+            showAlert(result, 'green');
+        } else {
+            showAlert(result, 'red');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showAlert('An error occurred. Please try again later.', 'red');
+    }
+
+    function showAlert(message, color) {
+    const statusMessage = document.getElementById('statusMessage');
+    statusMessage.textContent = message;
+    statusMessage.style.color = color;
+}
+
+});
+
+document.getElementById('verifyOTPButton').addEventListener('click', async () => {
+    const otp = document.getElementById('otpInput').value;
+
+    const verifyData = {
+        email: document.getElementById('eMail').value,
+        otp: otp
+    };
+
+    try {
+        const response = await fetch('/verifyOTP', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(verifyData)
+        });
+
+        const result = await response.text();
+
+        if (result === 'OTP verified. Proceed to password reset.') {
+            // Hide the OTP input form
+            document.getElementById('verifyotp').style.display = 'none';
+            // Display the password reset form
+            document.getElementById('resetpassword').style.display = 'block';
+            showAlert(result, 'green');
+        } else {
+            showAlert(result, 'red');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showAlert('An error occurred. Please try again later.', 'red');
+    }
+
+    function showAlert(message, color) {
+    const statusMessage = document.getElementById('otpStatusMessage');
+    statusMessage.textContent = message;
+    statusMessage.style.color = color;
+}
+
+
+
+});
+
+document.getElementById('resetPasswordButton').addEventListener('click', async () => {
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (newPassword !== confirmPassword) {
+        showAlert('Passwords do not match. Please try again.', 'red');
+        return;
+    }
+
+    const resetData = {
+        email: document.getElementById('eMail').value,
+        newPassword: newPassword
+    };
+
+    try {
+        const response = await fetch('/reset', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(resetData)
+        });
+
+        const result = await response.text();
+
+        if (result === 'Password reset successful') {
+            // Display success message
+            alert('Password reset successful!');
+            // Redirect to index.html after clicking OK
+            window.location.href = '/index.html';
+        } else {
+            showAlert('Password reset failed. Please try again later.', 'red');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showAlert('An error occurred. Please try again later.', 'red');
+    }
+});
+
+
+document.getElementById('eMail').addEventListener('input', () => {
+    const statusMessage = document.getElementById('statusMessage');
+    statusMessage.textContent = ''; // Clear the error message
+});
+
+document.getElementById('otpInput').addEventListener('input', () => {
+    const otpStatusMessage = document.getElementById('otpStatusMessage');
+    otpStatusMessage.textContent = ''; // Clear the error message
+});
+
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  }
+
+
+
+.form-section {
+    padding: 10px;
+    border: 1px solid #d16262;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+
+  
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+    background: transparent;
+    backdrop-filter: blur(20px);
+
+}
+
+.logo {
+  font-size: 1.3em;
+  color: rgb(255, 255, 255);
+  user-select: none; 
+}
+
+.navigation a {
+  position: relative;
+  font-size: 1.1em;
+  color: aliceblue;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 40px;
+
+}
+
+.navigation a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background: #fff;
+  border-radius: 5px;
+  transform: scaleX(0);
+  transition: transform .5s;
+
+}
+
+.navigation a:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
+}
+
+
+.navigation .btnLogin-popup {
+  width: 130px;
+  height: 50px;
+  background: transparent;
+  border: 2px solid #fff;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
+  color: #fff;
+  font-weight: 500;
+  margin-left: 40px;
+  transition: .5s;
+}
+
+.navigation .btnLogin-popup:hover {
+
+  background: #fff;
+  color: #162938;
+
+}
+
+
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url(https://i.pinimg.com/736x/92/2f/3c/922f3c7472f5406f5db52dd64ab7e946.jpg) ;
+    background-size: cover;
+    background-position: center;
+ 
+ 
+ }
+  
+ .loan-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  backdrop-filter: blur(20px);
+  background: transparent;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, .5);
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  top: 180px; /* Adjust this value to position the card from the top */
+  left: 320px;
+  position: absolute;
+  width: 600px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, .5);
+
+}
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #000000;
+  }
+  
+  fieldset {
+    border: 1px solid #bb5656;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  legend {
+    font-weight: bold;
+    color: #000000;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  input[type="radio"],
+  input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  button {
+    background-color: #2eb466;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+  }
+  
+  button:hover {
+    background-color: #1b9041;
+  }
+
+  
+  
+  

@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DASHBOARD</title>
+    <link rel="stylesheet" href="dahboard-style.css">
+    <link href="/website/css/uicons-bold-rounded.css">
+</head>
+<body>
+    <div class="sidebar">
+        <img class="imgs" src="https://cdn-icons-png.flaticon.com/256/7433/7433060.png">
+        <div class="logo1"></div>
+        <ul class="menu">
+            <li>
+                <button class="menu-button dashboard-button">
+                    <img src="https://cdn-icons-png.flaticon.com/128/3917/3917033.png">
+                    <span style="color: rgb(94, 93, 93); font-size: smaller;">Dashboard</span>
+                  
+                </button>
+            </li>
+            <li>
+                <button class="menu-button apply-button">
+                    <img src="https://cdn-icons-png.flaticon.com/128/3917/3917505.png">
+                    <span style="color: rgb(94, 93, 93); font-size: smaller;">Apply</span>
+                </button>
+            </li>
+            <li>
+                <button class="menu-button schedules-button">
+                    <img src="https://cdn-icons-png.flaticon.com/128/3917/3917244.png">
+                    <span style="color: rgb(94, 93, 93); font-size: smaller;">Schedules</span>
+                </button>
+            </li>
+            <li>
+                <button class="menu-button account-button">
+                    <img src="https://cdn-icons-png.flaticon.com/128/3917/3917688.png">
+                    <span style="color: rgb(94, 93, 93); font-size: smaller;">Account</span>
+                </button>
+            </li>
+            <li>
+                <button class="menu-button history-button">
+                    <img src="https://cdn-icons-png.flaticon.com/128/3917/3917296.png">
+                    <span style="color: rgb(94, 93, 93); font-size: smaller;">History</span>
+                </button>
+            </li>
+            <li>
+                <button class="menu-button settings-button">
+                    <img src="https://cdn-icons-png.flaticon.com/128/9795/9795475.png">
+                    <span style="color: rgb(94, 93, 93); font-size: smaller;">Rejected</span>
+                </button>
+            </li>
+            <li class="logout">
+                <button class="menu-button logout-button">
+                    <img src="https://cdn-icons-png.flaticon.com/128/5528/5528107.png">
+                    <span style="color: rgb(94, 93, 93); font-size: smaller;">LogOut</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+
+    
+
+        <div class="main--content" id="mainContent"> <!--this is the dashboard this where the content is put--> 
+        </div>
+
+        <script>
+        const mainContent = document.getElementById("mainContent");
+            function changeContent(content) {
+                mainContent.innerHTML = content;
+            }
+    
+            function activateButton(button, listItem) {
+            const buttons = document.querySelectorAll(".menu-button");
+            buttons.forEach(btn => {
+            if (btn !== button) {
+            btn.classList.remove("active");
+            }
+            });
+            button.classList.add("active");
+            const listItems = document.querySelectorAll(".menu li");
+            listItems.forEach(item => {
+            if (item !== listItem) {
+            item.classList.remove("active");
+            }
+         });
+           listItem.classList.add("active");
+}
+
+            const dashboardButton = document.querySelector(".dashboard-button");
+            const accountButton = document.querySelector(".account-button");
+            const applyButton = document.querySelector(".apply-button");
+            const schedulesButton = document.querySelector(".schedules-button");
+            const settingsButton = document.querySelector(".settings-button");
+            const logoutButton = document.querySelector(".logout-button");
+            const historyButton =  document.querySelector(".history-button");
+    
+            dashboardButton.addEventListener("click", async function () {
+    activateButton(dashboardButton, dashboardButton.closest("li"));
+    const content = `
+        <div class="dash-form-container">
+            <h2 class="logo"><span id="welcomeUsername"><%= session.username %></span></h2>
+            <h2 class="logo3"><span>Welcome Back,</span></h2>
+            <h2 class="time"><span><span id="currentDate"></span></span></h2>
+            <div class="profile-container">
+                <img id="profileImage" src="#">
+                </div>
+        </div>
+        <div class="sec-dashboard">
+            <h2 class="dashbox"><span id="Dashbox">Personal Loan</span></h2>
+            <br>
+            <label id="amountLabel"><span class="bold-text">Amount:</span> 10,000</label>
+            <label id="amountLabel"><span class="bold-text">Interest:</span> 3%</label>
+            <img class="image" src="https://cdn-icons-png.flaticon.com/128/893/893762.png">
+            </div>
+            <div class="third-dashboard">
+            <h2 class="dashbox"><span id="ThirdDash">Business Loan</span></h2>
+            <br>
+            <label id="amountLabel"><span class="bold-text">Amount:</span> 30,000</label>
+            <label id="amountLabel"><span class="bold-text">Interest:</span> 5%</label>
+            <img class="images" src="https://cdn-icons-png.flaticon.com/128/181/181095.png">
+            </div>
+            <div class="fourth-dashboard">
+    <h2 class="notebox"><span id="ThirdDash">NOTES:</span></h2>
+    <br>
+    <label id="Note1" class="note visible"><span class="bold-text"> If Your Loan is Approved Check Your SMS though the Number <br> You Submitted in the Loan Form</span></label>
+    <label id="Note2" class="note"><span class="bold-text"> If your Loan is Closed or Rejected you can check Them in Their Tab.</span></label>
+</div>
+
+                <div class="fifth-dashboard">
+    <h2 class="dashbox"><span id="fourthDash">Loan Details</span></h2>
+    <img class="Detailsimg" src="https://cdn-icons-png.flaticon.com/128/180/180768.png">
+    <br>
+    <br>
+    <div class="label-span-container">
+        <label for="loanID">Loan ID:</label>
+        <span id="loanID" class="spantext1"></span>
+        <label for="loanType">Loan Type:</label>
+        <span id="loanType" class="spantext2"></span>
+        <label for="loanAmount">Loan Amount:</label>
+        <span id="loanAmount" class="spantext3"></span>
+        <label for="loanInterest">Loan Interest:</label>
+        <span id="loanInterest" class="spantext4"></span>
+        <label for="termsInMonths">Terms in Months:</label>
+        <span id="termsInMonths" class="spantext5"></span>
+        <label for="totalPayment">Total Payment:</label>
+        <span id="totalPayment" class="spantext6"></span>
+        <label for="paymentPerMonth">Payment Per Month:</label>
+        <span id="paymentPerMonth" class="spantext7"></span>
+        <label for="approveDate">Approve Date:</label>
+        <span id="approveDate" class="spantext8"></span>
+        <label for="activateDate">Activate Date:</label>
+        <span id="activateDate" class="spantext9"></span>
+    </div>
+</div>
+
+            <div class="table-form-container">
+                <h2 class="tableforms"><span id="Dashbox">LOANS</span></h2>
+            </div>
+            <table id="loanTable" class="loanTable">
+    <thead>
+        <tr>
+            <th>LOAN #</th>
+            <th>Loan Type</th>
+            <th>Loan Amount</th>
+            <th>Loan Interest</th>
+            <th>Terms in Months</th>
+            <th>Total Payment</th>
+            <th>Payment Per Month</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+</div>
+
+    `;
+
+    // Assuming changeContent and activateButton are defined functions
+    changeContent(content);
+
+    try {
+    const response = await fetch('/getUsername'); // Change the URL to your server endpoint
+    const data = await response.json();
+    const welcomeUsername = document.getElementById('welcomeUsername');
+    if (data.username) {
+        welcomeUsername.textContent = data.username;
+
+        // Use the retrieved username to fetch user profile data
+        const userData = await fetchUserProfile(data.username);
+
+        // Use the retrieved username to fetch loan details
+        const loanData = await fetchLoanDetails(data.username);
+
+        // Display user profile data and loan details
+        displayUserProfile(userData);
+        displayLoanDetails(loanData);
+
+    } else {
+        welcomeUsername.textContent = 'Guest';
+    }
+} catch (error) {
+    console.error('Error:', error);
+    const welcomeUsername = document.getElementById('welcomeUsername');
+    welcomeUsername.textContent = 'Guest';
+}
+
+async function fetchUserProfile(username) {
+    try {
+        // Send a request to the server to fetch user profile data based on the username
+        const response = await fetch(`/getUserData?username=${username}`);
+        const userData = await response.json();
+
+        return userData;
+
+    } catch (error) {
+        console.error('Error fetching user profile data:', error);
+        return {};
+    }
+}
+
+// Fetch and display loan applications
+try {
+    const response = await fetch('/getLoanApplications');
+    const data = await response.json();
+    const loanTableBody = document.querySelector('#loanTable tbody');
+
+    if (data.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = '<td colspan="8">NO LOAN AVAILABLE</td>';
+        loanTableBody.appendChild(row);
+    } else {
+        data.forEach(application => {
+            if (application.status === 'Closed' || application.status === 'Rejected') {
+                return;
+            }
+
+            const row = document.createElement('tr');
+
+            // Check if each property has a value, and if so, use it; otherwise, use "N/A"
+            const loanId = application._id ? application._id.toString() : 'NO LOAN AVAILABLE';
+            const loanType = application['loan-type'] ? application['loan-type'] : 'NO LOAN AVAILABLE';
+            const loanAmount = application['loan-amount'] ? application['loan-amount'] : 'NO LOAN AVAILABLE';
+            const loanInterest = application['loan-interest'] ? application['loan-interest'] : 'NO LOAN AVAILABLE';
+            const termsInMonths = application['length-of-time'] ? application['length-of-time'] : 'NO LOAN AVAILABLE';
+            const totalPayment = application['total-payment'] ? application['total-payment'] : 'NO LOAN AVAILABLE';
+            const paymentPerMonth = application['payment-permonth'] ? application['payment-permonth'] : 'NO LOAN AVAILABLE';
+
+            row.innerHTML = `
+                <td>${loanId}</td>
+                <td>${loanType}</td>
+                <td>${loanAmount}</td>
+                <td>${loanInterest}</td>
+                <td>${termsInMonths}</td>
+                <td>${totalPayment}</td>
+                <td>${paymentPerMonth}</td>
+                <td>${application.status || 'NO LOAN AVAILABLE'}</td>
+            `;
+
+            loanTableBody.appendChild(row);
+        });
+    }
+} catch (error) {
+    console.error('Error fetching loan applications:', error);
+}
+
+
+function displayUserProfile(userData) {
+    // Check if the user has a profile picture
+    if (userData.profilePicture) {
+        const profileImage = document.getElementById('profileImage');
+        profileImage.src = `data:image/png;base64,${userData.profilePicture}`;
+    }
+
+
+}
+
+async function fetchLoanDetails(username) {
+    try {
+        // Send a request to the server to fetch loan details based on the username
+        const response = await fetch(`/getLoanDetails?username=${username}`);
+        const loanData = await response.json();
+
+        // Check if loanData is an array before filtering
+        if (Array.isArray(loanData)) {
+            // Filter out closed loans and include "Pending" and "Approve" loans
+            const activeLoans = loanData.filter(
+                loan => loan.status !== 'Closed' && loan.status !== 'Rejected' && (loan.status === 'Pending' || loan.status === 'Approved' || loan.status === 'Active')
+            );
+
+            return activeLoans;
+        } else {
+            // If loanData is not an array, return an empty array
+            return [];
+        }
+
+    } catch (error) {
+        console.error('Error fetching loan details:', error);
+        return [];
+    }
+}
+
+function displayLoanDetails(activeLoans) {
+    if (activeLoans.length > 0) {
+        const firstActiveLoan = activeLoans[0];
+
+        document.getElementById('loanID').textContent = firstActiveLoan._id || 'N/A';
+        document.getElementById('loanType').textContent = firstActiveLoan['loan-type'] || 'N/A';
+        document.getElementById('loanAmount').textContent = firstActiveLoan['loan-amount'] || 'N/A';
+        document.getElementById('loanInterest').textContent = firstActiveLoan['loan-interest'] || 'N/A';
+        document.getElementById('termsInMonths').textContent = firstActiveLoan['length-of-time'] || 'N/A';
+        document.getElementById('totalPayment').textContent = firstActiveLoan['total-payment'] || 'N/A';
+        document.getElementById('paymentPerMonth').textContent = firstActiveLoan['payment-permonth'] || 'N/A';
+        document.getElementById('approveDate').textContent = firstActiveLoan['approve-date'] || 'N/A';
+        document.getElementById('activateDate').textContent = firstActiveLoan['activate-date'] || 'N/A';
+    } else {
+        // If there are no active loans, set all loan detail labels to "N/A"
+        document.getElementById('loanID').textContent = 'N/A';
+        document.getElementById('loanType').textContent = 'N/A';
+        document.getElementById('loanAmount').textContent = 'N/A';
+        document.getElementById('loanInterest').textContent = 'N/A';
+        document.getElementById('termsInMonths').textContent = 'N/A';
+        document.getElementById('totalPayment').textContent = 'N/A';
+        document.getElementById('paymentPerMonth').textContent = 'N/A';
+        document.getElementById('approveDate').textContent = 'N/A';
+        document.getElementById('activateDate').textContent = 'N/A';
+    }
+}
+
+
+const currentDate = new Date();
+
+// Define months for formatting
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+// Get the day, month, and year
+const day = currentDate.getDate();
+const month = months[currentDate.getMonth()];
+const year = currentDate.getFullYear();
+
+// Display the formatted date in the "currentDate" span
+document.getElementById("currentDate").textContent = `Today, ${day} ${month} ${year}`;
+
+
+const notes = document.querySelectorAll('.note');
+    let currentNoteIndex = 0;
+
+    function showNextNote() {
+        notes[currentNoteIndex].classList.remove('visible');
+        currentNoteIndex = (currentNoteIndex + 1) % notes.length;
+        notes[currentNoteIndex].classList.add('visible');
+    }
+
+    // Initial display
+    showNextNote();
+
+    // Set an interval to switch between notes every few seconds (e.g., 5 seconds)
+    setInterval(showNextNote, 5000);
+
+});
+
+
+accountButton.addEventListener("click", async function() {
+    activateButton(accountButton, accountButton.closest("li"));
+    const content = `
+    <div class="dash-form-container">
+        <h2 class="logo"><span id="welcomeUsername">Loading...</span></h2>
+        <h2 class="logo3"><span>Welcome Back,</span></h2>
+        <h2 class="time"><span><span id="currentDate"></span></span></h2>
+        <div class="profile-container">
+                <img id="profileImageDash" src="#">
+                </div>
+        </div>
+                
+        <div class="info-form-container">
+            <h1>Account info</h1>
+            <br>
+            <fieldset class="account-info">
+                <label for="userID">UserID:</label>
+                <span id="userID"></span>
+                <br>
+                <label for="username">Username:</label>
+                <span id="username"></span>
+                <br>
+                <label for="email">Email:</label>
+                <span id="email"></span>
+                <br>
+                <label for="password">Password:</label>
+                <span id="password"></span>
+                <br>
+                <label for="accountStatus">Account Status:</label>
+                <span id="accountStatus"></span>
+            </fieldset>
+            <div class="profile">
+                <img id="profileImage" src="#">
+                </div>
+                <button class="button-changeprof" id="selectProfileButton"> Select
+                </button>
+                <button class="button-save" id="saveProfileButton">Save
+                </button>
+                <input type="file" id="fileInput" style="display: none;">
+        </div>
+
+        <form id="changePasswordForm" action="/changePassword" method="POST">
+    <div class="changepassword-form-container">
+      <h1>Change Password</h1>
+  
+      <div class="form-section">
+        <fieldset>
+          <label for="old-password">Old Password</label>
+          <input type="password" id="oldPassword" name="old-password" placeholder="Old password"/>
+          
+          <br>
+          <label for="new-password">New Password</label>
+          <input type="password" id="newPassword" name="new-password" placeholder="New password"/>
+          
+          <br>
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirmPassword" name="confirm-password" placeholder="Confirm password"/>
+          <br>
+          <br>
+          <button class="button2" type="submit">Change Password</button>
+        </fieldset>
+      </div>
+    </div>
+  </form>
+    `;
+    changeContent(content);
+
+    try {
+        const response = await fetch('/getUsername'); // Change the URL to your server endpoint
+        const data = await response.json();
+        
+        const welcomeUsername = document.getElementById('welcomeUsername');
+        if (data.username) {
+            welcomeUsername.textContent = data.username;
+        } else {
+            welcomeUsername.textContent = 'Guest';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        const welcomeUsername = document.getElementById('welcomeUsername');
+        welcomeUsername.textContent = 'Guest';
+    }
+
+    fetchAndDisplayUserData(); // Call the function to fetch and display user data
+});
+
+// Fetch and display user data, including profile picture
+function fetchAndDisplayUserData() {
+    fetch('/getUsername')
+        .then(response => response.json())
+        .then(data => {
+            // Update the username placeholder
+            document.getElementById('username').textContent = data.username;
+
+            // If the user is not a guest, fetch additional data
+            if (data.username !== 'Guest') {
+                // Fetch additional user data based on the username
+                fetch('/getUserData?username=' + data.username)
+                    .then(response => response.json())
+                    .then(userData => {
+                        // Update other placeholders with user data
+                        document.getElementById('userID').textContent = userData.userID;
+                        document.getElementById('email').textContent = userData.email;
+                        document.getElementById('password').textContent = '********'; // For security, avoid displaying the actual password
+                        document.getElementById('accountStatus').textContent = userData.accountStatus;
+
+                        // Display the profile picture if available
+                        if (userData.profilePicture) {
+                            const profileImage = document.getElementById('profileImage');
+                            profileImage.src = `data:image/jpeg;base64,${userData.profilePicture}`;
+
+                            const profileImageDash = document.getElementById('profileImageDash');
+                            profileImageDash.src = `data:image/jpeg;base64,${userData.profilePicture}`;
+
+                        }
+                       
+
+                    })
+                    .catch(error => {
+                        console.error('Error fetching user data:', error);
+                    });
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching username:', error);
+        });
+
+
+
+        const changePasswordForm = document.getElementById('changePasswordForm');
+
+    changePasswordForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const oldPassword = document.getElementById('oldPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        const response = await fetch('/changePassword', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'old-password': oldPassword,
+                'new-password': newPassword,
+                'confirm-password': confirmPassword
+            })
+        });
+
+        const data = await response.json();
+        alert(data.message); // Display the response message to the user
+    });
+
+        const currentDate = new Date();
+
+// Define months for formatting
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+// Get the day, month, and year
+const day = currentDate.getDate();
+const month = months[currentDate.getMonth()];
+const year = currentDate.getFullYear();
+// Display the formatted date in the "currentDate" span
+document.getElementById("currentDate").textContent = `Today, ${day} ${month} ${year}`;
+
+const selectProfileButton = document.getElementById('selectProfileButton');
+const saveProfileButton = document.getElementById('saveProfileButton');
+const profileImage = document.getElementById('profileImage');
+const fileInput = document.getElementById('fileInput');
+const profileImageDash = document.getElementById('profileImageDash');
+
+// Handle profile picture selection
+selectProfileButton.addEventListener('click', () => {
+    fileInput.click();
+});
+
+// Handle file input change
+fileInput.addEventListener('change', () => {
+    const selectedFile = fileInput.files[0];
+    if (selectedFile) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const imageUrl = event.target.result;
+            profileImage.src = imageUrl;
+        };
+        reader.readAsDataURL(selectedFile);
+    }
+});
+
+// Handle profile picture saving
+saveProfileButton.addEventListener('click', async () => {
+    const selectedFile = fileInput.files[0];
+    if (selectedFile) {
+        const formData = new FormData();
+        formData.append('profileImage', selectedFile);
+
+        try {
+            const response = await fetch('/saveProfilePicture', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                // Profile picture saved successfully
+                alert('Profile picture saved successfully.');
+            } else {
+                // Error occurred while saving profile picture
+                alert('Error saving profile picture.');
+            }
+        } catch (error) {
+            console.error('Error saving profile picture:', error);
+            alert('An error occurred while saving profile picture.');
+        }
+    } else {
+        // No file selected
+        alert('Please select a profile picture before saving.');
+    }
+});
+
+}
+
+    
+applyButton.addEventListener("click", async function() {
+    activateButton(applyButton, applyButton.closest("li"));
+
+    try {
+        // Here, we make an API request to the server to check the user's loan status.
+        const response = await fetch('/checkLoanStatus');
+        const data = await response.json();
+
+        // If the user can't apply (already has an active loan or pending application), we show an alert message.
+        if (!data.canApply) {
+            alert('You already have an active loan or pending application');
+            return; // This return statement stops further execution of code in this function.
+        }
+
+    const content = `
+    <div class="dash-form-container">
+        <h2 class="logo3"><span>Welcome Back,</span></h2>
+            <h2 class="time"><span><span id="currentDate"></span></span></h2>
+        <h2 class="logo"><span id="welcomeUsername"><%= session.username %></span></h2>
+        <div class="profile-container">
+                <img id="profileImage" src="#">
+                </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        
+<div class="loan-form-container">
+    <form id="loanApplicationForm" action="/submitLoanApplication" method="POST" enctype="multipart/form-data">
+    <h1>Loan Application</h1>
+
+    <div class="form-section">
+      <fieldset>
+        <legend>Basic Information</legend>
+        <br>
+        <label for="first-name">First Name</label>
+        <input type="text" name="first-name" required placeholder="e.g. JAYCEEMATT" autocomplete="off"/>
+        <label for="last-name">Last Name/MI</label>
+        <input type="text" name="last-name" required placeholder="e.g. GARCIA .S" autocomplete="off"/>
+        <label for="email" >Email</label>
+        <input type="text" name="email"  required placeholder="e.g. JCEE@gmail.com" autocomplete="off"/>
+        <br/>
+        <label for="telephone">Contact Number (Philippines)</label>
+        <input type="tel" name="telephone" pattern="(\+63|0)[0-9]{10}" required placeholder="e.g. +639123456789 or 09123456789" autocomplete="off"/>
+        <br/>
+        <label for="address">Home Address</label>
+        <input type="text" name="address"required placeholder="e.g. BLK 1 LOT 54 PH 1F SUB-URBAN" autocomplete="off"/>
+        <label for="birthday">Birthday</label>
+        <input type="date" name="birthday" required />
+      </fieldset>
+    </div>
+    <br>
+    <div class="form-section">
+        <fieldset>
+          <legend>IDS</legend>
+          <br>
+          <label for="ID-type">Type of ID</label>
+          <input name="ID" list="type-of-ID" required/>
+          <datalist id="type-of-ID"> 
+           
+            <option value="Passport">
+            <option value="National ID">
+            <option value="Driver license">
+          </datalist>
+          <br/>
+          <label for="ID-number">ID Number</label>
+          <input type="text" name="ID-number" required placeholder="e.g. 2196-5456-6456-2312" autocomplete="off"/>
+        </fieldset>
+      </div>
+      <br>
+    <div class="form-section">
+      <fieldset>
+        <legend>Work Information</legend>
+        <br>
+        <label for="occupation">Current Work</label>
+        <input type="text" name="occupation" required placeholder="e.g. CALL CENTER" autocomplete="off"/>
+        <label for="company-location">Work Address</label>
+        <input type="text" name="company-location" required placeholder="e.g. METRO MANILA BUILDING" autocomplete="off"/>
+        <label for="monthly-income">Montly Income</label>
+        <input type="text" name="monthly-income" required placeholder="e.g. 32,000" autocomplete="off"/>
+      </fieldset>
+    </div>
+<br>
+    <div class="form-section">
+      <fieldset>
+        <legend>Loan Type & Amount</legend>
+        <br>
+        <label>Loan Type</label>
+        <input type="radio" name="loan-type" value="Personal Loan"required>Personal Loan
+        <input type="radio" name="loan-type" value="Business Loan">Business Loan
+    
+        <label for="loan-amount">Loan Amount</label>
+        <input type="text" id="loan-amount" name="loan-amount" readonly />
+    
+        <label for="loan-interest">Loan Interest</label>
+        <input type="text" id="loan-interest" name="loan-interest" readonly />
+    
+        <label>Terms in (months)</label>
+        <input type="radio" name="length-of-time" value="3" required>3
+        <input type="radio" name="length-of-time" value="6">6
+        <input type="radio" name="length-of-time" value="9">9
+        <input type="radio" name="length-of-time" value="12">12
+    
+        <label for="total-payment">Total Payment</label>
+        <input type="text" id="total-payment" name="total-payment" readonly />
+    
+        <label for="payment-permonth">Payment per month</label>
+        <input type="text" id="payment-permonth" name="payment-permonth" readonly />
+      </fieldset>
+    </div>
+      <br>
+    <div class="form-section">
+      <fieldset>
+        <legend>Marital Status</legend>
+        <br>
+        <label>
+          <input type="radio" name="marital-status" value="single" required> Single
+        </label>
+        <label>
+          <input type="radio" name="marital-status" value="married"> Married
+        </label>
+        <label>
+          <input type="radio" name="marital-status" value="divorced"> Divorced
+        </label>
+        <label>
+          <input type="radio" name="marital-status" value="widowed"> Widowed
+        </label>
+      </fieldset>
+    </div>
+   <br>
+      <div class="form-section">
+        <fieldset>
+          <legend>Attachments</legend>
+          <br>
+          <label for="photo" required>Upload Payslip:</label>
+          <input type="file" id="photo" name="photo" accept="image/*">
+      </div>
+     <br>
+    <button class="button1" type="submit">Submit</button>
+  </form>
+</div>
+    `;
+    changeContent(content);
+
+    try {
+    const response = await fetch('/getUsername'); // Change the URL to your server endpoint
+    const data = await response.json();
+
+    const welcomeUsername = document.getElementById('welcomeUsername');
+    if (data.username) {
+        welcomeUsername.textContent = data.username;
+
+        const userData = await fetchUserProfile(data.username);
+
+        // Display user profile data, including the profile picture
+        displayUserProfile(userData);
+
+    } else {
+        welcomeUsername.textContent = 'Guest';
+    }
+} catch (error) {
+    console.error('Error:', error);
+    const welcomeUsername = document.getElementById('welcomeUsername');
+    welcomeUsername.textContent = 'Guest';
+}
+
+function displayUserProfile(userData) {
+    // Check if the user has a profile picture
+    if (userData.profilePicture) {
+        const profileImage = document.getElementById('profileImage');
+        profileImage.src = `data:image/png;base64,${userData.profilePicture}`;
+    }
+}
+
+const loanTypeInputs = document.querySelectorAll('input[name="loan-type"]');
+const loanAmountInput = document.getElementById('loan-amount');
+const loanInterestInput = document.getElementById('loan-interest');
+const totalPaymentInput = document.getElementById('total-payment');
+const paymentPerMonthInput = document.getElementById('payment-permonth');
+
+loanTypeInputs.forEach(input => {
+    input.addEventListener('input', () => {
+        const selectedLoanType = document.querySelector('input[name="loan-type"]:checked').value;
+
+        if (selectedLoanType === 'Personal Loan') {
+            loanAmountInput.value = '10000';
+            loanInterestInput.value = '3%';
+        } else if (selectedLoanType === 'Business Loan') {
+            loanAmountInput.value = '30000';
+            loanInterestInput.value = '5%';
+        } else {
+            loanAmountInput.value = '';
+            loanInterestInput.value = '';
+        }
+
+        updatePaymentDetails();
+    });
+
+});
+
+const updatePaymentDetails = () => {
+    const loanAmount = parseFloat(loanAmountInput.value);
+    const loanInterest = parseFloat(loanInterestInput.value) / 100;
+    const selectedTerm = parseInt(document.querySelector('input[name="length-of-time"]:checked').value);
+
+    const totalPayment = loanAmount + (loanAmount * loanInterest * selectedTerm);
+    const paymentPerMonth = totalPayment / selectedTerm;
+
+    totalPaymentInput.value = totalPayment.toFixed(2);
+    paymentPerMonthInput.value = paymentPerMonth.toFixed(2);
+};
+
+document.querySelectorAll('input[name="length-of-time"]').forEach(input => {
+    input.addEventListener('change', updatePaymentDetails);
+});
+
+
+    const loanApplicationForm = document.getElementById('loanApplicationForm');
+
+    loanApplicationForm.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Prevent default form submission
+
+        // Collect form data using FormData
+        const formData = new FormData(loanApplicationForm);
+
+        // Get the stored username from session storage
+        const storedUsername = sessionStorage.getItem('username');
+
+        // Add the username to the form data
+        formData.append('username', storedUsername);
+
+        try {
+            const response = await fetch('/submitLoanApplication', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            if (data.message === 'Loan application submitted successfully') {
+                alert('Loan application submitted successfully');
+                
+                // Reset the form after successful submission
+                loanApplicationForm.reset();
+                dashboardButton.click();
+            } else {
+                alert('Loan application submission failed');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+
+      } catch (error) {
+        console.error('Error checking loan status:', error);
+    }
+
+    const currentDate = new Date();
+
+// Define months for formatting
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+// Get the day, month, and year
+const day = currentDate.getDate();
+const month = months[currentDate.getMonth()];
+const year = currentDate.getFullYear();
+
+// Display the formatted date in the "currentDate" span
+document.getElementById("currentDate").textContent = `Today, ${day} ${month} ${year}`;
+
+});   
+
+
+
+
+        
+             
+schedulesButton.addEventListener("click", async function() {
+    activateButton(schedulesButton, schedulesButton.closest("li"));
+
+    const content = `
+    <div class="dash-form-container">
+        <h2 class="logo"><span id="welcomeUsername"><%= session.username %></span></h2>
+        <h2 class="logo3"><span>Welcome Back,</span></h2>
+        <h2 class="time"><span><span id="currentDate"></span></span></h2>
+        <div class="profile-container">
+                <img id="profileImage" src="#">
+                </div>
+        </div>
+        <div class="paymentcontainer">
+        <table id="paymentTable" class="paymentTable">
+    <thead>
+        <tr>
+            <th>PaymentID</th>
+            <th>Payment Date</th>
+            <th>Payment Amount</th>
+            <th>Payment Status</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+</div>
+    `;
+    changeContent(content);
+
+    try {
+        const response = await fetch('/getUsername');
+        const data = await response.json();
+
+        const welcomeUsername = document.getElementById('welcomeUsername');
+        welcomeUsername.textContent = data.username;
+
+        // Use the retrieved username to fetch user profile data
+        const userData = await fetchUserProfile(data.username);
+
+        // Use the retrieved username to fetch payment schedules
+        const paymentData = await fetchPaymentSchedules(data.username);
+
+        // Display user profile data and payment schedules
+        displayUserProfile(userData);
+        displayPaymentSchedules(paymentData);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+
+    const currentDate = new Date();
+
+    // Define months for formatting
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    // Get the day, month, and year
+    const day = currentDate.getDate();
+    const month = months[currentDate.getMonth()];
+    const year = currentDate.getFullYear();
+
+    // Display the formatted date in the "currentDate" span
+    document.getElementById("currentDate").textContent = `Today, ${day} ${month} ${year}`;
+});
+
+async function fetchUserProfile(username) {
+    try {
+        // Send a request to the server to fetch user profile data based on the username
+        const response = await fetch(`/getUserData?username=${username}`);
+        const userData = await response.json();
+
+        return userData;
+    } catch (error) {
+        console.error('Error fetching user profile data:', error);
+        return {};
+    }
+}
+
+async function fetchPaymentSchedules(username) {
+    try {
+        // Send a request to the server to fetch user's active loans
+        const activeLoans = await fetchLoanDetails(username);
+
+        if (activeLoans.length === 0) {
+            return []; // No active loans, return an empty array
+        }
+
+        const activeLoanIds = activeLoans.map(loan => loan._id.toString());
+
+        // Send a request to the server to fetch all payment schedules
+        const response = await fetch(`/getPaymentSchedules`);
+        const allPaymentData = await response.json();
+
+        // Filter payment schedules for the active loan IDs
+        const paymentData = allPaymentData.filter(schedule => activeLoanIds.includes(schedule.loanID));
+
+        return paymentData;
+    } catch (error) {
+        console.error('Error fetching payment schedules:', error);
+        return [];
+    }
+}
+
+
+async function fetchLoanDetails(username) {
+    try {
+        // Send a request to the server to fetch loan details based on the username
+        const response = await fetch(`/getLoanDetails?username=${username}`);
+        const loanData = await response.json();
+
+        // Check if loanData is an array before filtering
+        if (Array.isArray(loanData)) {
+            // Filter out closed loans and include "Pending" and "Approve" loans
+            const activeLoans = loanData.filter(
+                loan => loan.status !== 'Closed' || loan.status === 'Pending' || loan.status === 'Approved'
+            );
+
+            return activeLoans;
+        } else {
+            // If loanData is not an array, return an empty array
+            return [];
+        }
+
+    } catch (error) {
+        console.error('Error fetching loan details:', error);
+        return [];
+    }
+}
+
+function displayUserProfile(userData) {
+    // Check if the user has a profile picture
+    if (userData.profilePicture) {
+        const profileImage = document.getElementById('profileImage');
+        profileImage.src = `data:image/png;base64,${userData.profilePicture}`;
+    }
+}
+
+function displayPaymentSchedules(paymentData) {
+    const paymentTableBody = document.querySelector('#paymentTable tbody');
+
+    // Sort paymentData by payment schedule date in ascending order
+    paymentData.sort((a, b) => new Date(a['payment-schedule']) - new Date(b['payment-schedule']));
+
+    if (paymentData.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = '<td colspan="4">NO PAYMENT AVAILABLE</td>';
+        paymentTableBody.appendChild(row);
+    } else {
+        paymentData.forEach(schedule => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${schedule._id}</td>
+                <td>${schedule['payment-schedule']}</td>
+                <td>${schedule['payment-amount']['$numberDecimal']}</td>
+                <td>${schedule.status}</td>
+            `;
+
+            paymentTableBody.appendChild(row);
+        });
+    }
+}
+
+
+
+
+            settingsButton.addEventListener("click", async function() {
+                activateButton(settingsButton, settingsButton.closest("li"));
+                const content = `
+                    
+                <div class="dash-form-container">
+        <h2 class="logo"><span id="welcomeUsername">Loading...</span></h2>
+        <h2 class="logo3"><span>Welcome Back,</span></h2>
+        <h2 class="time"><span><span id="currentDate"></span></span></h2>
+        <div class="profile-container">
+                <img id="profileImage" src="#">
+                </div>
+        </div>
+       <div class="RejectedContainer"> 
+        <table id="loanTableRejected" class="loanTableRejected">
+    <thead>
+        <tr>
+            <th>LOAN #</th>
+            <th>Loan Type</th>
+            <th>Loan Amount</th>
+            <th>Loan Interest</th>
+            <th>Terms in Months</th>
+            <th>Total Payment</th>
+            <th>Payment Per Month</th>
+            <th>Status</th>
+            <th>Rejected Date</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+</div>
+                `;
+                changeContent(content);
+                try {
+        const response = await fetch('/getUsername'); // Change the URL to your server endpoint
+        const data = await response.json();
+
+        const welcomeUsername = document.getElementById('welcomeUsername');
+        if (data.username) {
+            welcomeUsername.textContent = data.username;
+            // Use the retrieved username to fetch user profile data
+            const userData = await fetchUserProfile(data.username);
+            // Display user profile data
+            displayUserProfile(userData);
+            fetchAndDisplayRejectedLoans();
+        } else {
+            welcomeUsername.textContent = 'Guest';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        const welcomeUsername = document.getElementById('welcomeUsername');
+        welcomeUsername.textContent = 'Guest';
+    }
+
+    async function fetchAndDisplayRejectedLoans() {
+    try {
+        const response = await fetch('/getRejectedLoans'); // Replace with your server endpoint for fetching closed loans
+        const RejectedLoanData = await response.json();
+        const rejectedLoanTableBody = document.querySelector('#loanTableRejected tbody');
+
+        if (RejectedLoanData.length === 0) {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td colspan="9">NO REJECTED LOANS AVAILABLE</td>';
+            rejectedLoanTableBody.appendChild(row);
+        } else {
+            RejectedLoanData.forEach(loan => {
+                const row = document.createElement('tr');
+
+                // Check if each property has a value, and if so, use it; otherwise, use "N/A"
+                const loanId = loan._id ? loan._id.toString() : 'N/A';
+                const loanType = loan['loan-type'] ? loan['loan-type'] : 'N/A';
+                const loanAmount = loan['loan-amount'] ? loan['loan-amount'] : 'N/A';
+                const loanInterest = loan['loan-interest'] ? loan['loan-interest'] : 'N/A';
+                const termsInMonths = loan['length-of-time'] ? loan['length-of-time'] : 'N/A';
+                const totalPayment = loan['total-payment'] ? loan['total-payment'] : 'N/A';
+                const paymentPerMonth = loan['payment-permonth'] ? loan['payment-permonth'] : 'N/A';
+                const rejectedDate = loan['rejected-date'] ? loan['rejected-date'] : 'N/A';
+
+                row.innerHTML = `
+                    <td>${loanId}</td>
+                    <td>${loanType}</td>
+                    <td>${loanAmount}</td>
+                    <td>${loanInterest}</td>
+                    <td>${termsInMonths}</td>
+                    <td>${totalPayment}</td>
+                    <td>${paymentPerMonth}</td>
+                    <td>Rejected</td>
+                    <td>${rejectedDate}</td>
+                `;
+
+                rejectedLoanTableBody.appendChild(row);
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching Rejected loans:', error);
+    }
+}
+
+
+    
+
+    const currentDate = new Date();
+
+    // Define months for formatting
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    // Get the day, month, and year
+    const day = currentDate.getDate();
+    const month = months[currentDate.getMonth()];
+    const year = currentDate.getFullYear();
+
+    // Display the formatted date in the "currentDate" span
+    document.getElementById("currentDate").textContent = `Today, ${day} ${month} ${year}`;
+});
+
+async function fetchUserProfile(username) {
+    try {
+        // Send a request to the server to fetch user profile data based on the username
+        const response = await fetch(`/getUserData?username=${username}`);
+        const userData = await response.json();
+
+        return userData;
+    } catch (error) {
+        console.error('Error fetching user profile data:', error);
+        return {};
+    }
+}
+
+function displayUserProfile(userData) {
+    // Check if the user has a profile picture
+    if (userData.profilePicture) {
+        const profileImage = document.getElementById('profileImage');
+        profileImage.src = `data:image/png;base64,${userData.profilePicture}`;
+    }
+}
+
+
+historyButton.addEventListener("click", async function() {
+                activateButton(historyButton, historyButton.closest("li"));
+                const content = `
+
+
+                <div class="dash-form-container">
+        <h2 class="logo"><span id="welcomeUsername"><%= session.username %></span></h2>
+        <h2 class="logo3"><span>Welcome Back,</span></h2>
+        <h2 class="time"><span><span id="currentDate"></span></span></h2>
+        <div class="profile-container">
+                <img id="profileImage" src="#">
+                </div>
+        </div>
+
+        
+<div class="closecontainer">
+        <table id="loanTablehistory" class="loanTablehistory">
+    <thead>
+        <tr>
+            <th>LOAN #</th>
+            <th>Loan Type</th>
+            <th>Loan Amount</th>
+            <th>Loan Interest</th>
+            <th>Terms in Months</th>
+            <th>Total Payment</th>
+            <th>Payment Per Month</th>
+            <th>Status</th>
+            <th>Close Date</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+</div>
+
+     `;
+                changeContent(content);
+
+                try {
+        const response = await fetch('/getUsername'); // Change the URL to your server endpoint
+        const data = await response.json();
+
+        const welcomeUsername = document.getElementById('welcomeUsername');
+        if (data.username) {
+            welcomeUsername.textContent = data.username;
+
+            const userData = await fetchUserProfile(data.username);
+
+            // Display user profile data, including the profile picture
+            displayUserProfile(userData);
+
+            // Fetch closed loans after displaying user data
+            fetchAndDisplayClosedLoans()
+        } else {
+            welcomeUsername.textContent = 'Guest';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        const welcomeUsername = document.getElementById('welcomeUsername');
+        welcomeUsername.textContent = 'Guest';
+    }
+
+    const currentDate = new Date();
+
+    // Define months for formatting
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    // Get the day, month, and year
+    const day = currentDate.getDate();
+    const month = months[currentDate.getMonth()];
+    const year = currentDate.getFullYear();
+
+    // Display the formatted date in the "currentDate" span
+    document.getElementById("currentDate").textContent = `Today, ${day} ${month} ${year}`;
+
+
+    function displayUserProfile(userData) {
+        // Check if the user has a profile picture
+        if (userData.profilePicture) {
+            const profileImage = document.getElementById('profileImage');
+            profileImage.src = `data:image/png;base64,${userData.profilePicture}`;
+        }
+    }
+
+    
+
+    async function fetchAndDisplayClosedLoans() {
+    try {
+        const response = await fetch('/getClosedLoans'); // Replace with your server endpoint for fetching closed loans
+        const closedLoanData = await response.json();
+        const closedLoanTableBody = document.querySelector('#loanTablehistory tbody');
+
+        if (closedLoanData.length === 0) {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td colspan="9">NO CLOSED LOANS AVAILABLE</td>';
+            closedLoanTableBody.appendChild(row);
+        } else {
+            closedLoanData.forEach(loan => {
+                const row = document.createElement('tr');
+
+                // Check if each property has a value, and if so, use it; otherwise, use "N/A"
+                const loanId = loan._id ? loan._id.toString() : 'N/A';
+                const loanType = loan['loan-type'] ? loan['loan-type'] : 'N/A';
+                const loanAmount = loan['loan-amount'] ? loan['loan-amount'] : 'N/A';
+                const loanInterest = loan['loan-interest'] ? loan['loan-interest'] : 'N/A';
+                const termsInMonths = loan['length-of-time'] ? loan['length-of-time'] : 'N/A';
+                const totalPayment = loan['total-payment'] ? loan['total-payment'] : 'N/A';
+                const paymentPerMonth = loan['payment-permonth'] ? loan['payment-permonth'] : 'N/A';
+                const closeDate = loan['close-date'] ? loan['close-date'] : 'N/A';
+
+                row.innerHTML = `
+                    <td>${loanId}</td>
+                    <td>${loanType}</td>
+                    <td>${loanAmount}</td>
+                    <td>${loanInterest}</td>
+                    <td>${termsInMonths}</td>
+                    <td>${totalPayment}</td>
+                    <td>${paymentPerMonth}</td>
+                    <td>Closed</td>
+                    <td>${closeDate}</td>
+                `;
+
+                closedLoanTableBody.appendChild(row);
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching Closed loans:', error);
+    }
+}
+
+
+function displayUserProfile(userData) {
+    // Check if the user has a profile picture
+    if (userData.profilePicture) {
+        const profileImage = document.getElementById('profileImage');
+        profileImage.src = `data:image/png;base64,${userData.profilePicture}`;
+    }
+}
+
+});
+
+
+
+
+logoutButton.addEventListener("click", function() {
+        // Display a confirmation message
+        const confirmLogout = confirm("Are you sure you want to log out?");
+
+        if (confirmLogout) {
+            // Redirect to index.html
+            window.location.href = "index.html";
+        }
+    });
+
+    
+ </script>
+
+
+           
+</body>
+</html>

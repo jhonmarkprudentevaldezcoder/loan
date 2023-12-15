@@ -1,0 +1,202 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins);
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: url(https://i.pinimg.com/736x/92/2f/3c/922f3c7472f5406f5db52dd64ab7e946.jpg) no-repeat;
+        background-size: cover;
+        background-position: center;
+     
+     
+     }
+
+     .top-text {
+        text-align: center;
+        padding: 20px 0;
+        position: absolute; /* Set the position to absolute */
+        top: 80px; /* Adjust the top value to move the text vertically */
+        left: 520px; /* Adjust the left value to move the text horizontally */
+        font-size: 25px;
+        color: #fff;
+        
+      }
+
+      .top-text h2 {
+        opacity: 0; /* Set initial opacity to 0 for fade-in effect */
+        animation: fadeInText 1s ease 1s forwards; /* Add fade-in animation */
+      }
+      
+      @keyframes fadeInText {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+     
+
+     header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px 100px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 99;
+        background: transparent;
+        backdrop-filter: blur(20px);
+    
+    }
+
+    .logo {
+        font-size: 1.3em;
+        color: rgb(255, 255, 255);
+        user-select: none; 
+    }
+
+    .navigation a {
+        position: relative;
+        font-size: 1.1em;
+        color: aliceblue;
+        text-decoration: none;
+        font-weight: 500;
+        margin-left: 40px;
+    
+    }
+    
+    .navigation a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 100%;
+        height: 3px;
+        background: #fff;
+        border-radius: 5px;
+        transform: scaleX(0);
+        transition: transform .5s;
+    
+    }
+    
+    .navigation a:hover::after {
+        transform-origin: left;
+        transform: scaleX(1);
+    }
+    
+    .navigation .btnLogin-popup {
+        width: 130px;
+        height: 50px;
+        background: transparent;
+        border: 2px solid #fff;
+        outline: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1.1em;
+        color: #fff;
+        font-weight: 500;
+        margin-left: 40px;
+        transition: .5s;
+    }
+
+    .navigation .btnLogin-popup:hover {
+
+        background: #fff;
+        color: #162938;
+    
+    }
+
+    .changepassword-form-container {
+        max-width: 350px;
+        margin: 0 auto;
+        backdrop-filter: blur(20px);
+        background: transparent;
+        border-radius: 10px;
+        border: 2px solid rgba(255, 255, 255, .5);
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        top: 140px; /* Adjust this value to position the card from the top */
+        left: 800px;
+        position: absolute;
+        width: 600px;
+        box-shadow: 0 0 50px rgba(0, 0, 0, .5);
+        height: 420px;
+        
+      
+      }
+        
+        h1 {
+          text-align: center;
+          margin-bottom: 20px;
+          color: #000000;
+        }
+        
+        fieldset {
+          border: none;
+          border-radius: 5px;
+          padding: 10px;
+          margin-bottom: 20px;
+          height: 300px;
+        }
+        
+      
+        
+        label {
+          display: block;
+          margin-bottom: 5px;
+          color: #333;
+        }
+
+        input[type="password"],
+        input[type="password"],
+        input[type="password"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  button {
+    background-color: #2eb466;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .info-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    backdrop-filter: blur(20px);
+    background: transparent;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, .5);
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    top: 140px; /* Adjust this value to position the card from the top */
+    left: 100px;
+    position: absolute;
+    width: 600px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, .5);
+    height: 420px;
+    
+  
+  }

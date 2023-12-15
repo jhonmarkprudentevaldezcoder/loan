@@ -1,0 +1,98 @@
+.Regis{
+    width: 100%;
+    background: linear-gradient(to top,rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%), url(https://cdn.pixabay.com/photo/2019/03/08/02/14/flat-4041621_960_720.png);
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+
+.logo{
+    color: #ff7200;
+    font-size: 35px;
+    font-family: Arial;
+    padding-left: 20px;
+    float: left;
+    padding-top: 10px;
+    margin-top: 5px
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(0, 0, 0);
+    margin: 0;
+  }
+  
+  .GITNA {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Add padding to containers */
+  .container {
+    padding: 25px;
+    background: url(https://cdn.pixabay.com/photo/2019/03/08/02/12/flat-4041617_960_720.png);
+    max-width: 400px; /* Set a maximum width to make the form smaller */
+    height: 500px;
+    text-align: center; /* Center the content inside the container */
+    position: absolute;
+    top: 50px; /* Move the container 50 pixels down from the top of the page */
+    left: 430px;
+  }
+  
+
+  .container input[type=text], input[type=password] {
+    width: 90%;
+    padding: 15px;
+    margin: 1px 0 22px 0 ;
+    display: inline-block;
+    border: none;
+    background: #2eb466;
+  }
+  
+  .container input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+  
+  /* Overwrite default styles of hr */
+  hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+  }
+  
+  /* Set a style for the submit button */
+  .registerbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+  }
+  
+  .registerbtn:hover {
+    opacity: 1;
+  }
+  
+  /* Add a blue text color to links */
+  a {
+    color: dodgerblue;
+  }
+  
+  /* Set a grey background color and center the text of the "sign in" section */
+  
+    
+  
+
+  h1 {
+    font-size: 15px;
+}
+
+p {
+    font-size: 15px;
+}
+

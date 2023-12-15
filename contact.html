@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DASHBOARD</title>
+    <link rel="stylesheet" href="cantact-style.css">
+    <style>
+        </style>
+</head>
+<body>
+    
+<header>
+    <h2 class="logo"><span id="welcomeUsername"><%= session.username %></span></h2>
+    <nav class="navigation">
+        <a href="javascript:void(0);" onclick="checkLoanStatusAndRedirect()">Apply Loan</a>
+        <a href="account.html">Account</a>
+        
+        
+        <button id="logoutButton" class="btnLogin-popup" onclick="confirmLogout()">Logout</button>
+    </nav>
+</header>
+
+<div class="top-text">
+    <h2>DASHBOARD</h2>
+</div>
+
+
+<table id="loanTable" class="loanTable">
+    <thead>
+        <tr>
+            <th>LOANID</th>
+            <th>Loan Type</th>
+            <th>Loan Amount</th>
+            <th>Loan Interest</th>
+            <th>Terms in Months</th>
+            <th>Total Payment</th>
+            <th>Payment Per Month</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+
+<table id="paymentTable" class="paymentTable">
+    <thead>
+        <tr>
+            <th>LOANID</th>
+            <th>Payment Date</th>
+            <th>Payment Amount</th>
+            <th>Payment Status</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const response = await fetch('/getPaymentSchedules');
+            const data = await response.json();
+            const paymentTableBody = document.querySelector('#paymentTable tbody');
+
+            if (data.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="4">No data</td>';
+                paymentTableBody.appendChild(row);
+            } else {
+                data.forEach(schedule => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${schedule.loanID}</td>
+                        <td>${schedule['payment-schedule']}</td>
+                        <td>${schedule['payment-amount']['$numberDecimal']}</td>
+                        <td>${schedule.status}</td>
+                    `;
+
+                    paymentTableBody.appendChild(row);
+                });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const response = await fetch('/getLoanApplications');
+            const data = await response.json();
+            const loanTableBody = document.querySelector('#loanTable tbody');
+
+            if (data.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="8">No data</td>';
+                loanTableBody.appendChild(row);
+            } else {
+                data.forEach(application => {
+                    const row = document.createElement('tr');
+                    const loanId = application._id.toString(); // Convert ObjectId to string
+                    row.innerHTML = `
+                        <td>${loanId}</td>
+                        <td>${application['loan-type']}</td>
+                        <td>${application['loan-amount']}</td>
+                        <td>${application['loan-interest']}</td>
+                        <td>${application['length-of-time']}</td>
+                        <td>${application['total-payment']}</td>
+                        <td>${application['payment-permonth']}</td>
+                        <td>${application.status}</td>
+                    `;
+
+                    loanTableBody.appendChild(row);
+                });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+</script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const welcomeUsername = document.getElementById('welcomeUsername');
+        const storedUsername = '<%= session.username %>'; // Use the server-side variable
+
+        if (storedUsername) {
+            welcomeUsername.textContent = storedUsername;
+        } else {
+            welcomeUsername.textContent = 'Guest';
+        }
+    });
+</script>
+
+<!-- JS FOR LOGO USERNAME IN DASHBOARD -->
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('/getUsername');
+        const data = await response.json();
+        
+        const welcomeUsername = document.getElementById('welcomeUsername');
+        welcomeUsername.textContent = data.username;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
+</script>
+<!-- JS FOR LOGO USERNAME IN DASHBOARD -->
+
+<script>
+    function confirmLogout() {
+        const confirmation = confirm('Are you sure you want to logout?');
+        if (confirmation) {
+            // Perform logout action here, e.g. redirect to logout page or clear session data
+            window.location.href = '/index.html'; // You can change this to your logout endpoint
+        }
+    }
+</script>
+
+<script>
+    function checkLoanStatusAndRedirect() {
+    // Make an API request to check the user's loan application status
+    fetch('/checkLoanStatus')
+        .then(response => response.json())
+        .then(data => {
+            if (data.canApply) {
+                // Redirect the user to the loan application page
+                window.location.href = 'apply.html';
+            } else {
+                alert('You already have an active loan or pending application');
+            }
+        })
+        .catch(error => {
+            console.error('Error checking loan status:', error);
+        });
+}
+</script>
+</body>
+</html>
+

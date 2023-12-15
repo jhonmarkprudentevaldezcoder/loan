@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>LOAN MANAGE</title>
+    <link rel="stylesheet" href="verification-style.css"
+</head>
+
+<body>
+       <header>
+        <h2 class="logo">VERIFY ACCOUNT</h2>
+          <nav class="navigation">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a
+            
+          </nav>
+        </div>
+       </header>
+
+       
+       <form id="verifyaccount" action="/verify" method="POST">
+        <div class="verify-form-container">
+          <h1>Verify Account</h1>
+      
+          <div class="form-section">
+            <fieldset>
+              <label for="email">Email</label>
+              <input type="text" id="eMail" name="email" placeholder="Email (used in registration)"/>
+              <br>
+              <br>
+              <label for="otp">OTP</label>
+              <input type="text" id="OtP" name="otp" placeholder="OTP (received in email)"/>
+              <br>
+              <br>
+              
+              <button type="submit">Verify Account</button>
+              <div id="statusMessage"></div>
+            </fieldset>
+          </div>
+        </div>
+    </form>
+    
+    <script>
+        document.getElementById('verifyaccount').addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevent default form submission
+
+    const emailInput = document.getElementById('eMail');
+    const otpInput = document.getElementById('OtP');
+    const statusMessage = document.getElementById('statusMessage');
+
+    const email = emailInput.value;
+    const otp = otpInput.value;
+
+    const verificationData = {
+        email: email,
+        otp: otp
+    };
+
+    try {
+        const response = await fetch('/verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(verificationData)
+        });
+
+        const result = await response.text();
+
+        if (result.includes('Your account has been verified')) {
+            statusMessage.textContent = 'Verification Successfull';
+            statusMessage.style.color = 'green';
+            // Clear the input fields after successful verification
+            emailInput.value = '';
+            otpInput.value = '';
+            // Optionally, you can redirect the user to the login page here
+        } else {
+            statusMessage.textContent = 'Invalid OTP or email.';
+            statusMessage.style.color = 'red';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        statusMessage.textContent = 'An error occurred while verifying your account. Please try again later.';
+        statusMessage.style.color = 'red';
+    }
+});
+
+
+
+    </script>
+    </body>
+    </html>
