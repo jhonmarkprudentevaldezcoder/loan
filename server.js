@@ -73,7 +73,7 @@ app.post('/register', async (req, res) => {
             username,
             email,
             password, // Remember to hash and salt the password before storing it
-            "account-status": 'unverified', // Set account status to "unverified"
+            "userStatus": 'unverified', // Set account status to "unverified"
             otp
         };
 
@@ -137,11 +137,15 @@ app.post('/login', async (req, res) => {
 
         // If everything is correct, log in the user
         req.session.username = user.username; // Store the username in the session
+
         res.status(200).json({
+
             message: 'Login successful', 
             userId:user._id, 
             userUsername:user.username,
-            userEmail:user.email
+            userEmail:user.email,
+            userStatus:user.userStatus
+
         });
 
     } catch (error) {
