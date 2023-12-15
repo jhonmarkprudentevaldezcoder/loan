@@ -141,8 +141,7 @@ app.post('/login', async (req, res) => {
             message: 'Login successful', 
             userId:user._id, 
             userUsername:user.username,
-            userEmail:user.email,
-            userStatus:user.accountStatus
+            userEmail:user.email
         });
 
     } catch (error) {
