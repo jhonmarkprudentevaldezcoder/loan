@@ -46,7 +46,7 @@ app.get("/", (req, res) => {
 
 // START OF THE SERVER REGISTER //
 
-app.post("/register", async (req, res) => {
+app.post("register", async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
@@ -139,7 +139,7 @@ app.post("/login", async (req, res) => {
 
     if (user["userStatus"] === "unverified") {
       res.status(401).json({
-        message: "Please verify your account first",
+        message: "unverified",
       });
       return;
     }
