@@ -46,7 +46,7 @@ app.get("/", (req, res) => {
 
 // START OF THE SERVER REGISTER //
 
-app.post("register", async (req, res) => {
+app.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
