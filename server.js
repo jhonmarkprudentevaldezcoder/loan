@@ -138,7 +138,7 @@ app.post("/login", async (req, res) => {
     }
 
     if (user["userStatus"] === "unverified") {
-      res.status(400).json({
+      res.status(401).json({
         message: "Please verify your account first",
         userId: user._id,
         userUsername: user.username,
