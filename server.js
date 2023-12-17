@@ -144,7 +144,12 @@ app.post("/login", async (req, res) => {
 
     // If everything is correct, log in the user
     req.session.username = user.username; // Store the username in the session
-    res.status(200).json({ message: "Login successful" });
+    res.status(200).json({
+      message: "Login successful",
+      userID: user._id,
+      userStatus: user.userStatus,
+      userName: user.username,
+    });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Internal server error" });
