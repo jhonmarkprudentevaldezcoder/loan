@@ -51,8 +51,8 @@ app.post("/register", async (req, res) => {
 
   try {
     await client.connect();
-    const db = client.db("users");
-    const usersCollection = db.collection("theiruserandpass");
+    const db = client.db("loanDB");
+    const usersCollection = db.collection("users");
 
     // Check if the username already exists
     const existingUsername = await usersCollection.findOne({ username });
@@ -122,8 +122,8 @@ app.post("/login", async (req, res) => {
 
   try {
     await client.connect();
-    const db = client.db("users");
-    const usersCollection = db.collection("theiruserandpass");
+    const db = client.db("loanDB");
+    const usersCollection = db.collection("users");
 
     const user = await usersCollection.findOne({ email });
 
@@ -138,22 +138,13 @@ app.post("/login", async (req, res) => {
     }
 
     if (user["userStatus"] === "unverified") {
-      res.status(401).json({
-        message: "unverified",
-      });
+      res.status(401).json({ message: "Please verify your account first" });
       return;
     }
 
     // If everything is correct, log in the user
     req.session.username = user.username; // Store the username in the session
-
-    res.status(200).json({
-      message: "Login successful",
-      userId: user._id,
-      userUsername: user.username,
-      userEmail: user.email,
-      userStatus: user.userStatus,
-    });
+    res.status(200).json({ message: "Login successful" });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -170,22 +161,10 @@ app.post("/submitLoanApplication", upload.single("photo"), async (req, res) => {
   const status = "Pending"; // Set the default status to "Pending"
   const username = req.session.username || "Guest"; // Retrieve the username from the session
 
-  // Read the binary data of the image file
-  const capturedPhotoPath = "D:/ALL/website/images/questionmark.png"; // Provide the correct file path
-  let capturedPhotoData;
-
-  try {
-    capturedPhotoData = fs.readFileSync(capturedPhotoPath);
-  } catch (error) {
-    console.error("Error reading the image file:", error);
-    res.status(500).json({ message: "Failed to submit loan application" });
-    return;
-  }
-
   try {
     await client.connect();
-    const db = client.db("users"); // Use the correct database name
-    const usersLoanCollection = db.collection("usersloan"); // Use the correct collection name
+    const db = client.db("loanDB"); // Use the correct database name
+    const usersLoanCollection = db.collection("loans"); // Use the correct collection name
 
     const newLoanApplication = {
       ...formData,
@@ -195,7 +174,6 @@ app.post("/submitLoanApplication", upload.single("photo"), async (req, res) => {
         size: photo.size,
         data: photo.buffer, // Store the file content as a Buffer
       },
-      capturedPhoto: capturedPhotoData, // Store the image binary data
       status: status, // Set the default status
       username: username, // Add the username to the loan application
     };
@@ -215,8 +193,8 @@ app.post("/submitLoanApplication", upload.single("photo"), async (req, res) => {
 app.get("/getLoanApplications", async (req, res) => {
   try {
     await client.connect();
-    const db = client.db("users"); // Use the correct database name
-    const usersLoanCollection = db.collection("usersloan"); // Use the correct collection name
+    const db = client.db("loanDB"); // Use the correct database name
+    const usersLoanCollection = db.collection("loans"); // Use the correct collection name
 
     const username = req.session.username || ""; // Retrieve the username from the session
     const loanApplications = await usersLoanCollection
@@ -232,8 +210,8 @@ app.get("/getLoanApplications", async (req, res) => {
 app.get("/getPaymentSchedules", async (req, res) => {
   try {
     await client.connect();
-    const db = client.db("users"); // Use the correct database name
-    const paymentSchedulesCollection = db.collection("userspaymentschedules"); // Use the correct collection name
+    const db = client.db("loanDB"); // Use the correct database name
+    const paymentSchedulesCollection = db.collection("payments"); // Use the correct collection name
 
     const username = req.session.username || ""; // Retrieve the username from the session
     const paymentSchedules = await paymentSchedulesCollection
@@ -255,8 +233,8 @@ app.post("/changePassword", async (req, res) => {
   try {
     // Connect to MongoDB and retrieve user data by username
     await client.connect();
-    const db = client.db("users");
-    const usersCollection = db.collection("theiruserandpass"); // Use the correct collection name
+    const db = client.db("loanDB");
+    const usersCollection = db.collection("users"); // Use the correct collection name
     const user = await usersCollection.findOne({ username });
 
     if (!user || user.password !== oldPassword) {
@@ -292,8 +270,8 @@ app.post("/verify", async (req, res) => {
 
   try {
     await client.connect();
-    const db = client.db("users");
-    const usersCollection = db.collection("theiruserandpass");
+    const db = client.db("loanDB");
+    const usersCollection = db.collection("users");
 
     const user = await usersCollection.findOne({ email, otp });
 
@@ -301,7 +279,7 @@ app.post("/verify", async (req, res) => {
       // Update the account status to "verified" and remove OTP
       await usersCollection.updateOne(
         { _id: user._id },
-        { $set: { "account-status": "verified" }, $unset: { otp: "" } }
+        { $set: { userStatus: "verified" }, $unset: { otp: "" } }
       );
       return res.send("Your account has been verified. You can now log in.");
     } else {
@@ -319,8 +297,8 @@ app.post("/forgot", async (req, res) => {
 
   try {
     await client.connect();
-    const db = client.db("users");
-    const usersCollection = db.collection("theiruserandpass");
+    const db = client.db("loanDB");
+    const usersCollection = db.collection("users");
 
     const user = await usersCollection.findOne({ email });
 
@@ -370,8 +348,8 @@ app.post("/verifyOTP", async (req, res) => {
 
   try {
     await client.connect();
-    const db = client.db("users");
-    const usersCollection = db.collection("theiruserandpass");
+    const db = client.db("loanDB");
+    const usersCollection = db.collection("users");
 
     const user = await usersCollection.findOne({ email });
 
@@ -398,8 +376,8 @@ app.post("/reset", async (req, res) => {
 
   try {
     await client.connect();
-    const db = client.db("users");
-    const usersCollection = db.collection("theiruserandpass");
+    const db = client.db("loanDB");
+    const usersCollection = db.collection("users");
 
     // Find the user by email
     const user = await usersCollection.findOne({ email });
@@ -427,8 +405,8 @@ app.get("/getUserData", async (req, res) => {
   try {
     // Connect to MongoDB and retrieve user data by username
     await client.connect();
-    const db = client.db("users");
-    const usersCollection = db.collection("theiruserandpass"); // Use the correct collection name
+    const db = client.db("loanDB");
+    const usersCollection = db.collection("users"); // Use the correct collection name
     const user = await usersCollection.findOne({ username });
 
     if (!user) {
@@ -457,8 +435,8 @@ app.get("/getLoanDetails", async (req, res) => {
   try {
     // Connect to MongoDB and retrieve user data by username
     await client.connect();
-    const db = client.db("users");
-    const usersCollection = db.collection("usersloan"); // Use the correct collection name
+    const db = client.db("loanDB");
+    const usersCollection = db.collection("loans"); // Use the correct collection name
     const loanDetails = await usersCollection
       .find({ username, status: { $in: ["Active", "Pending", "Approved"] } })
       .toArray();
@@ -483,8 +461,8 @@ app.get("/checkLoanStatus", async (req, res) => {
   try {
     // Establish a database connection and select the appropriate collection.
     await client.connect();
-    const db = client.db("users"); // Replace 'users' with your actual database name
-    const usersLoanCollection = db.collection("usersloan"); // Replace 'usersloan' with your actual collection name
+    const db = client.db("loanDB"); // Replace 'users' with your actual database name
+    const usersLoanCollection = db.collection("loans"); // Replace 'usersloan' with your actual collection name
 
     // Check if the user already has an active loan or pending application in the database.
     const existingLoan = await usersLoanCollection.findOne({
@@ -507,8 +485,8 @@ app.get("/checkLoanStatus", async (req, res) => {
 app.get("/getClosedLoans", async (req, res) => {
   try {
     await client.connect();
-    const db = client.db("users"); // Use the correct database name
-    const usersLoanCollection = db.collection("usersloan"); // Use the correct collection name
+    const db = client.db("loanDB"); // Use the correct database name
+    const usersLoanCollection = db.collection("loans"); // Use the correct collection name
 
     const username = req.session.username || ""; // Retrieve the username from the session
 
@@ -527,8 +505,8 @@ app.get("/getClosedLoans", async (req, res) => {
 app.get("/getRejectedLoans", async (req, res) => {
   try {
     await client.connect();
-    const db = client.db("users"); // Use the correct database name
-    const usersLoanCollection = db.collection("usersloan"); // Use the correct collection name
+    const db = client.db("loanDB"); // Use the correct database name
+    const usersLoanCollection = db.collection("loans"); // Use the correct collection name
 
     const username = req.session.username || ""; // Retrieve the username from the session
 
@@ -566,8 +544,8 @@ app.post(
     try {
       // Store the profile picture in MongoDB
       await client.connect();
-      const db = client.db("users");
-      const usersCollection = db.collection("theiruserandpass");
+      const db = client.db("loanDB");
+      const usersCollection = db.collection("users");
 
       // Find the user by username and update their profile picture
       await usersCollection.updateOne(
